@@ -3,7 +3,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const router = require('./src/controller/routes');
+//multiple modules from src folder
+const {router} = require('./src/index');
 
 // variables
 const app = express();
