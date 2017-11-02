@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/src/public'));
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 // any requests being made,morgan generates logs automatically
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 // views
 app.engine('handlebars', hbs.engine)
@@ -30,6 +30,9 @@ app.set('view engine', 'handlebars');
 
 // routes, searching for first param inside of second param
 app.use('/', router);
+app.use('/saved', router);
+app.use('/new', router);
+app.use('/comments', router);
 
 app.listen(PORT, () => {
   console.log('listening at port: ' + PORT);

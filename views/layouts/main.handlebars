@@ -9,10 +9,16 @@
   </head>
   <body>
     <nav id='navstyling' class='navbar sticky-top navbar-inverse bg-inverse'>
-      <div>
+      <div class='row'>
         <h1 class='navbar-brand mb-0'>Mongo Scrapper Website</h1>
-        <a href='#'>Saved Articles</a>
-        <button id='navbuttoncss' class='btn btn-primary' type='button' data-toggle="modal" data-target="#confirmationModal">Scrap More Articles</button>
+        <form action="/saved" method="GET">
+          <button class='btn btn-primary navbuttoncss' type='submit'> Saved Articles</button>
+        </form>
+        <form action="/new" method="GET">
+          <button class='btn btn-primary navbuttoncss' type='submit' data-toggle="modal" data-target="#confirmationModal">Scrap Articles</button>
+        </form>
+        <button class="btn btn-primary navbuttoncss" onclick="window.open('https://github.com/Caromin')">Github</button>
+        <button class="btn btn-primary navbuttoncss" onclick="window.open('https://caromin.github.io/Caromin-WebPortfolio/')">Web Portfolio</button>
       </div>
     </nav>
     <div id='maindiv' class='container'>
@@ -20,7 +26,7 @@
           MongoDB Scrapper Website
         </div>
         <div id='subtitle' class='container'>
-          New York Times Edition
+          FiveThirtyEight Edition
         </div>
     </div>
     {{{body}}}
@@ -52,5 +58,6 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src='../../javascript/index.js'></script>
   </body>
 </html>
