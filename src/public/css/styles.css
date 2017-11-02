@@ -66,3 +66,7 @@ a {
   width: 100%;
   margin-top: 10px;
 }
+
+#confirmationModal {
+  top: 30%;
+}
