@@ -1,18 +1,10 @@
-const express = require('express');
 const request = require('request');
 const cheerio = require('cheerio');
 
-// variables
-const router = express.Router();
-
-router.get('/saved', (err, res) => {
-  res.redirect('/');
-});
-
-router.get('/new', (err, res) => {
+grabArticles = () => {
+  let results = [];
   request("https://fivethirtyeight.com/", function(error, response, html) {
     const $ = cheerio.load(html);
-    const results = [];
     for (x=1; x<4; x++) {
       // i is the current loop number, element=this is the current data requested
       $('#home-feature-' + x.toString()).each((i, element) => {
@@ -28,16 +20,8 @@ router.get('/new', (err, res) => {
     }
     console.log(results);
   });
-  res.redirect('/');
-});
+  return results;
+}
 
-router.post('/comments', (err, res) => {
-  res.redirect('/');
-});
 
-// default route
-router.get('/', (err, res) => {
-  res.render('firstPage');
-});
-
-module.exports = router;
+module.exports = {grabArticles};

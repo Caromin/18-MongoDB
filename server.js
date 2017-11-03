@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 //multiple modules from src folder
-const {router} = require('./src/index');
+const {router, changeStatus} = require('./src/index');
 
 // variables
 const app = express();
@@ -31,7 +31,7 @@ app.set('view engine', 'handlebars');
 // routes, searching for first param inside of second param
 app.use('/', router);
 app.use('/saved', router);
-app.use('/new', router);
+app.use('/api/fetch', router);
 app.use('/comments', router);
 
 app.listen(PORT, () => {
