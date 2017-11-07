@@ -3,12 +3,14 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 //multiple modules from src folder
 const {router, changeStatus} = require('./src/index');
 
 // variables
 const app = express();
 const PORT = process.env.PORT || 8080;
+const db = process.env.MONGODB_URI || 'mongodb://caromin:Learning1@ds143211.mlab.com:43211/aromindatabase';
 // potential helper functions used in handlebars and other options
 const hbs = exphbs.create({
   helpers: {
@@ -33,6 +35,13 @@ app.use('/', router);
 app.use('/saved', router);
 app.use('/api/fetch', router);
 app.use('/comments', router);
+
+mongoose.connect(db, { useMongoClient: false }, (err) => {
+  if (err) {
+    console.log('there was an error');
+  }
+  console.log('mongoose has connected!');
+});
 
 app.listen(PORT, () => {
   console.log('listening at port: ' + PORT);

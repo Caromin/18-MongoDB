@@ -18,7 +18,8 @@ router.post('/api/fetch', (err, res) => {
         }
       })
   };
-  promiseInfo().then(function() {
+  promiseInfo().then(() => {
+    // console.log('this is api/fetch: ' + results);
     return;
   });
   res.redirect('/');
