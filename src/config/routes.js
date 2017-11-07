@@ -1,6 +1,7 @@
 const express = require('express');
 const {grabArticles} = require('../controller/scrapper.js');
 const Article = require('../models/articles');
+const Current = require('../models/current');
 // const Comments = require('../models/comments');
 
 // variables
@@ -11,21 +12,23 @@ router.get('/saved', (err, res) => {
   res.redirect('/');
 });
 
-router.post('/api/fetch', (err, res) => {
-  let promiseInfo = function() {
+router.get('/api/fetch', (err, res) => {
+  // finding all and displaying topic and title, which is the 2nd param
+  let promiseInfo = () => {
       return new Promise(function(resolve, reject) {
-        let results = grabArticles();
-
-        if (results.length === 3) {
-          resolve();
-        }
-      })
+        resolve(grabArticles());
+      });
   };
+
   promiseInfo().then(() => {
-    // console.log('this is api/fetch: ' + results);
-    return;
+    // let results = [];
+    Current.find({}, 'topic title', (err, data) => {
+      // results.push(data);
+    }).limit(3).then((data) => {
+      console.log('this is after .then: ' + data);
+    res.send({response: data});
+    })
   });
-  res.redirect('/');
 });
 
 router.post('/comments', (err, res) => {
@@ -34,14 +37,7 @@ router.post('/comments', (err, res) => {
 
 // default route
 router.get('/', (err, res) => {
-  const results = [];
-  // finding all and displaying topic and title, which is the 2nd param
-  Article.find({}, 'topic title', (err, data) => {
-    // console.log(data);
-    results.push(data);
-  }).then((results) => {
-      res.render('firstPage', {test: results})
-    })
+  res.render('firstPage');
 });
 
 module.exports = router;
