@@ -1,10 +1,13 @@
 const express = require('express');
 const {grabArticles} = require('../controller/scrapper.js');
+const Article = require('../models/articles');
+// const Comments = require('../models/comments');
 
 // variables
 const router = express.Router();
 
 router.get('/saved', (err, res) => {
+
   res.redirect('/');
 });
 
@@ -31,7 +34,14 @@ router.post('/comments', (err, res) => {
 
 // default route
 router.get('/', (err, res) => {
-  res.render('firstPage');
+  const results = [];
+  // finding all and displaying topic and title, which is the 2nd param
+  Article.find({}, 'topic title', (err, data) => {
+    // console.log(data);
+    results.push(data);
+  }).then((results) => {
+      res.render('firstPage', {test: results})
+    })
 });
 
 module.exports = router;

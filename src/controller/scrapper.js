@@ -2,7 +2,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const Article = require('../models/articles');
 
-
+// function that uses cheerio npm
 grabArticles = () => {
   let results = [];
   request("https://fivethirtyeight.com/", function(error, response, html) {
@@ -13,13 +13,14 @@ grabArticles = () => {
       $('#home-feature-' + x.toString()).each((i, element) => {
         const topic = $(element).children('.post-info').children('.topic').text().trim();
         const title = $(element).children('.post-info').children('.tease-meta').children('.tease-meta-content').children('h2.article-title.entry-title').text().trim();
-        // console.log('topic: ' + topic + '\n' + 'title: ' + title);
+
         const newArticle = new Article({
           topic: topic,
           title: title
         });
+
         newArticle.save();
-        console.log('this is results for ' + x + ": " + newArticle);
+        // console.log('this is results for ' + x + ": " + newArticle);
         results.push(newArticle);
       })
     }
