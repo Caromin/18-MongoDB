@@ -2,7 +2,7 @@
 #maindiv {
   background: url('/images/background.jpg') no-repeat center;
   width: 100%;
-  height: 1000px;
+  height: 900px;
   background-size: contain;
   margin-top: 10px;
 }
@@ -45,7 +45,7 @@ body {
 }
 
 #mainfooter {
-  position: relative;
+  position: fixed;
   bottom: 0;
   text-align: center;
   height: 60px;
@@ -65,7 +65,9 @@ body {
   text-align: center;
   width: 100%;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  overflow: scroll;
+  height: 500px;
 }
 
 #confirmationModal {
