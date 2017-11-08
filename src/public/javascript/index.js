@@ -6,15 +6,21 @@ $(document).ready(function() {
 
 $('body').on('click', '.saveCurrent', function (){
   const id = this.id;
+  const data = {id: this.id};
+
+
   $.ajax({
+    type: 'POST',
     url: '/saved',
     contentType: 'application/json',
-    data: JSON.stringify({id: this.id}),
+    dataType: 'json',
+    data: JSON.stringify(data),
     success: function(response) {
-      // console.log(id);
+      console.log(id);
       $('#' + id.toString())
         .addClass('newBtnColor nohover btn-disabled')
         .text('Saved!');
+      console.log('this is the end client side reponse: ' + JSON.stringify(response.response));
     }
   });
 

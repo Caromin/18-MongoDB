@@ -10,8 +10,8 @@ mongoose.Promise = global.Promise;
 const router = express.Router();
 
 router.post('/saved', (req, res) => {
-  console.log('this is server side: ' + req.body);
-  res.send({response: 'hello world'});
+  console.log('this is server side: ' + req.body.id);
+  res.send({response: req.body});
 });
 
 router.get('/api/fetch', (req, res) => {
