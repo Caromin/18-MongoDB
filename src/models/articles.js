@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const ArticleSchema = new Schema({
   topic: String,
-  title: String
+  title: String,
+  url: String
 },
 {
   timestamps: true

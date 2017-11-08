@@ -10,10 +10,11 @@ $(document).ready(function() {
   				for (i = 0; i < response.response.length; i ++) {
             $('#resultsdiv')
               .append('<div class=" row topNews">'
-                + '<div class="col-6 text-left"><b>Topic:</b> ' + response.response[i].topic + '</br>'
-                + '<b>Title:</b> ' + response.response[i].title + '</div>'
+                + '<div class="col-9 text-left"><b>Topic:</b> ' + response.response[i].topic + '</br>'
+                + '<b>Title:</b> ' + response.response[i].title + '</br>'
+                + '<b>URL:</b> ' + '<a href=' + response.response[i].url + ' target="_blank">Link</a>'
+                + '</div>'
                 + '<div class="col-3"><button id=' + response.response[i].id + ' class="btn btn-primary" type="submit" >Save Article</button></div>'
-                + '<div class="col-3"><button id=' + response.response[i].id + ' class="btn btn-primary" type="submit" >Remove</button></div>'
                 + '</div><hr>'
             );
           }

@@ -26,7 +26,7 @@ router.get('/api/fetch', (err, res) => {
   });
 
   promiseInfo.then(() => {
-    Current.find({}, 'topic title', (err, data) => {
+    Current.find({}, 'topic title url', (err, data) => {
     }).limit(3)
       // gives the last three articles saved in current models
       .sort({createdAt: 'desc'})

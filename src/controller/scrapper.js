@@ -14,12 +14,14 @@ grabArticles = () => {
       $('#home-feature-' + x.toString()).each((i, element) => {
         const topic = $(element).children('.post-info').children('.topic').text().trim();
         const title = $(element).children('.post-info').children('.tease-meta').children('.tease-meta-content').children('h2.article-title.entry-title').text().trim();
+        const url = $(element).children('a').attr('href');
 
         const newCurrent = new Current({
           topic: topic,
-          title: title
+          title: title,
+          url: url
         });
-        // console.log('this is the new data scrapped' + newCurrent);
+        // console.log('this is the new data scrapped' + url);
         newCurrent.save();
       })
     }
