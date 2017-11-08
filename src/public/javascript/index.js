@@ -7,8 +7,12 @@ $(document).ready(function() {
 $('body').on('click', '.saveCurrent', function (){
   const id = this.id;
   const data = {id: this.id};
+  SaveArticle(id, data);
+
+});
 
 
+SaveArticle = (id, data) => {
   $.ajax({
     type: 'POST',
     url: '/saved',
@@ -20,14 +24,10 @@ $('body').on('click', '.saveCurrent', function (){
       $('#' + id.toString())
         .addClass('newBtnColor nohover btn-disabled')
         .text('Saved!');
-      console.log('this is the end client side reponse: ' + JSON.stringify(response.response));
+      console.log('this is the end client side reponse: ' + response.response);
     }
   });
-
-});
-
-
-
+}
 
 
 

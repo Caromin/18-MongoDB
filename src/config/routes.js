@@ -10,8 +10,19 @@ mongoose.Promise = global.Promise;
 const router = express.Router();
 
 router.post('/saved', (req, res) => {
-  console.log('this is server side: ' + req.body.id);
-  res.send({response: req.body});
+  // console.log('this is server side: ' + req.body.id);
+  Current.findOne({ '_id': req.body.id}).then((data) => {
+    // console.log(data.title);
+    const newArticle = new Article({
+      topic: data.topic,
+      title: data.title,
+      url: data.url
+    });
+
+    newArticle.save();
+
+    res.send({response: req.body.id + 'was sent to Articles Collection'});
+  })
 });
 
 router.get('/api/fetch', (req, res) => {
