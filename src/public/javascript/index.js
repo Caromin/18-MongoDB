@@ -11,9 +11,13 @@ $('body').on('click', '.saveCurrent', function (){
   const id = this.id;
   const data = {id: this.id};
   SaveArticle(id, data);
-
 });
 
+$('body').on('click', '.delete', function (){
+  const id = this.id;
+  const data = {id: this.id};
+  DeleteArticle(id, data);
+});
 
 SaveArticle = (id, data) => {
   $.ajax({
@@ -50,11 +54,24 @@ DisplaySavedArticles = () => {
             + '<b>Title:</b> ' + response.response[i].title + '</br>'
             + '<b>URL:</b> ' + '<a href=' + response.response[i].url + ' target="_blank">Link</a>'
             + '</div>'
-            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary saveCurrent" type="submit" >Add Comment</button></div>'
-            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary saveCurrent" type="submit" >Delete Article</button></div>'
+            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary " type="submit" >Add Comment</button></div>'
+            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary delete" type="submit" >Delete Article</button></div>'
             + '</div><hr>'
         );
       }
+    }
+  });
+}
+
+
+DeleteArticle = () => {
+  $.ajax({
+    type: 'POST',
+    url: '/delete',
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function(response) {
+      DisplaySavedArticles();
     }
   });
 }

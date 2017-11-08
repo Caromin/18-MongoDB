@@ -37,6 +37,7 @@ app.use('/saved', router);
 app.use('/displayArticles', router);
 app.use('/api/fetch', router);
 app.use('/comments', router);
+app.use('/delete', router);
 
 mongoose.connect(db, { useMongoClient: false }, (err) => {
   if (err) {

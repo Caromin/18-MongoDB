@@ -26,6 +26,11 @@ router.post('/saved', (req, res) => {
 });
 
 router.get('/displayArticles', (req, res) => {
+
+  Current.remove({}, (req, data) => {
+    console.log('current collections was deleted');
+  });
+
   Article.find({}, 'topic title url', (req, data) => {
   })
     .sort({createdAt: 'desc'})
@@ -34,6 +39,11 @@ router.get('/displayArticles', (req, res) => {
     });
 })
 
+router.post('/delete', (req, res) => {
+  console.log('this is server side: ' + req.body.id);
+  res.send({response: 'finished'});
+  // Article.findOneAndRemove({id: })
+});
 
 router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
