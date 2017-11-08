@@ -2,6 +2,9 @@ $(document).ready(function() {
   $('#modulebtn').on("click", function() {
     ScrapArticles();
     });
+  $('#savedArts').on('click', function() {
+    DisplaySavedArticles();
+  })
 });
 
 $('body').on('click', '.saveCurrent', function (){
@@ -23,6 +26,7 @@ SaveArticle = (id, data) => {
       console.log(id);
       $('#' + id.toString())
         .addClass('newBtnColor nohover btn-disabled')
+        .removeClass('saveCurrent')
         .text('Saved!');
       console.log('this is the end client side reponse: ' + response.response);
     }
@@ -30,7 +34,30 @@ SaveArticle = (id, data) => {
 }
 
 
-
+DisplaySavedArticles = () => {
+  $.ajax({
+    type: 'GET',
+    url: '/displayArticles',
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function(response) {
+      console.log(response.response);
+      $('#resultsdiv').html('');
+      for (i = 0; i < response.response.length; i ++) {
+        $('#resultsdiv')
+          .append('<div class=" row topNews">'
+            + '<div class="col-6 text-left"><b>Topic:</b> ' + response.response[i].topic + '</br>'
+            + '<b>Title:</b> ' + response.response[i].title + '</br>'
+            + '<b>URL:</b> ' + '<a href=' + response.response[i].url + ' target="_blank">Link</a>'
+            + '</div>'
+            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary saveCurrent" type="submit" >Add Comment</button></div>'
+            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary saveCurrent" type="submit" >Delete Article</button></div>'
+            + '</div><hr>'
+        );
+      }
+    }
+  });
+}
 
 
 ScrapArticles = () => {

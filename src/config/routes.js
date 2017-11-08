@@ -25,6 +25,16 @@ router.post('/saved', (req, res) => {
   })
 });
 
+router.get('/displayArticles', (req, res) => {
+  Article.find({}, 'topic title url', (req, data) => {
+  })
+    .sort({createdAt: 'desc'})
+    .then((data) => {
+      res.send({response: data});
+    });
+})
+
+
 router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
     if ( grabArticles() === undefined ) {
