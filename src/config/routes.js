@@ -2,7 +2,9 @@ const express = require('express');
 const {grabArticles} = require('../controller/scrapper.js');
 const Article = require('../models/articles');
 const Current = require('../models/current');
-// const Comments = require('../models/comments');
+const mongoose = require('mongoose');
+const Comments = require('../models/comments');
+mongoose.Promise = global.Promise;
 
 // variables
 const router = express.Router();
@@ -13,20 +15,24 @@ router.get('/saved', (err, res) => {
 });
 
 router.get('/api/fetch', (err, res) => {
-  // finding all and displaying topic and title, which is the 2nd param
-  let promiseInfo = () => {
-      return new Promise(function(resolve, reject) {
-        resolve(grabArticles());
-      });
-  };
+  const promiseInfo = new Promise((resolve, reject) => {
+    if ( grabArticles() === undefined ) {
+      console.log('hurrayyyy');
+      resolve();
+    } else {
+      console.log('oh nooooooo!');
+      reject();
+    }
+  });
 
-  promiseInfo().then(() => {
-    // let results = [];
+  promiseInfo.then(() => {
     Current.find({}, 'topic title', (err, data) => {
-      // results.push(data);
-    }).limit(3).then((data) => {
-      console.log('this is after .then: ' + data);
-    res.send({response: data});
+    }).limit(3)
+      // gives the last three articles saved in current models
+      .sort({createdAt: 'desc'})
+      .then((data) => {
+        res.send({response: data, total: 'Articles were found!'});
+        // console.log(data);
     })
   });
 });

@@ -9,13 +9,16 @@ $(document).ready(function() {
           console.log(response.response);
   				for (i = 0; i < response.response.length; i ++) {
             $('#resultsdiv')
-              .append('<div class="topNews">'
-                + '<b>Topic:</b> ' + response.response[i].topic + '</ br>'
-                + '<b>Title:</b> ' + response.response[i].title + '</ br>'
-                + '<button id=' + response.response[i].id + ' class="btn btn-primary" type="submit" >Save Article</button>'
-                + '</div>'
+              .append('<div class=" row topNews">'
+                + '<div class="col-6 text-left"><b>Topic:</b> ' + response.response[i].topic + '</br>'
+                + '<b>Title:</b> ' + response.response[i].title + '</div>'
+                + '<div class="col-3"><button id=' + response.response[i].id + ' class="btn btn-primary" type="submit" >Save Article</button></div>'
+                + '<div class="col-3"><button id=' + response.response[i].id + ' class="btn btn-primary" type="submit" >Remove</button></div>'
+                + '</div><hr>'
             );
           }
+          $('#modalbody').html('');
+          $('#modalbody').html(response.total);
   			}
   		});
     });

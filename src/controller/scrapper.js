@@ -8,6 +8,7 @@ const Current = require('../models/current');
 grabArticles = () => {
   request("https://fivethirtyeight.com/", function(error, response, html) {
     const $ = cheerio.load(html);
+
     for (x=1; x<4; x++) {
       // i is the current loop number, element=this is the current data requested
       $('#home-feature-' + x.toString()).each((i, element) => {
@@ -18,11 +19,11 @@ grabArticles = () => {
           topic: topic,
           title: title
         });
-
+        // console.log('this is the new data scrapped' + newCurrent);
         newCurrent.save();
       })
     }
-    return ;
+    return;
   });
 }
 

@@ -45,7 +45,7 @@ body {
 }
 
 #mainfooter {
-  position: absolute;
+  position: relative;
   bottom: 0;
   text-align: center;
   height: 60px;
@@ -65,8 +65,14 @@ body {
   text-align: center;
   width: 100%;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 #confirmationModal {
   top: 30%;
+}
+
+hr {
+  border-top: 2px solid black;
+  margin: 8px 0;
 }

@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 const CurrentSchema = new Schema({
   topic: String,
   title: String
+},
+{
+  timestamps: true
 });
 
 // I believe good practice to name the model name same as const
