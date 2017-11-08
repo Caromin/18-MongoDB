@@ -23,6 +23,7 @@ const hbs = exphbs.create({
 app.use(express.static(__dirname + '/src/public'));
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // any requests being made,morgan generates logs automatically
 // app.use(morgan('combined'));
 

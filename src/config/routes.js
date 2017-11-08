@@ -9,12 +9,12 @@ mongoose.Promise = global.Promise;
 // variables
 const router = express.Router();
 
-router.get('/saved', (err, res) => {
-
-  res.redirect('/');
+router.post('/saved', (req, res) => {
+  console.log('this is server side: ' + req.body);
+  res.send({response: 'hello world'});
 });
 
-router.get('/api/fetch', (err, res) => {
+router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
     if ( grabArticles() === undefined ) {
       console.log('hurrayyyy');
@@ -26,7 +26,7 @@ router.get('/api/fetch', (err, res) => {
   });
 
   promiseInfo.then(() => {
-    Current.find({}, 'topic title url', (err, data) => {
+    Current.find({}, 'topic title url', (req, data) => {
     }).limit(3)
       // gives the last three articles saved in current models
       .sort({createdAt: 'desc'})
@@ -37,12 +37,12 @@ router.get('/api/fetch', (err, res) => {
   });
 });
 
-router.post('/comments', (err, res) => {
+router.post('/comments', (req, res) => {
   res.redirect('/');
 });
 
 // default route
-router.get('/', (err, res) => {
+router.get('/', (req, res) => {
   res.render('firstPage');
 });
 

@@ -78,3 +78,9 @@ hr {
   border-top: 2px solid black;
   margin: 8px 0;
 }
+
+.newBtnColor {
+  border: 0;
+  background-color: #d35400;
+  /*color: #f39c12;*/
+}
