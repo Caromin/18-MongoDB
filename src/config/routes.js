@@ -1,49 +1,57 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
+// Imported local files
 const {grabArticles} = require('../controller/scrapper.js');
 const Article = require('../models/articles');
 const Current = require('../models/current');
-const mongoose = require('mongoose');
 const Comments = require('../models/comments');
+
+// Imported Promise ES6
 mongoose.Promise = global.Promise;
 
 // variables
 const router = express.Router();
 
+// Create/Save Route
 router.post('/saved', (req, res) => {
   // console.log('this is server side: ' + req.body.id);
   Current.findOne({ '_id': req.body.id})
     .then((data) => {
-      console.log('this is all of the data ' + data);
+      // console.log('this is all of the data ' + data);
       Article.count({url: data.url}, (err, count) => {
+
         if (count === 0) {
           const newArticle = new Article({
             topic: data.topic,
             title: data.title,
             url: data.url
           });
-
           newArticle.save();
           res.send({response: true});
+
         } else {
           res.send({response: false});
+
         }
-      });
+    });
   })
 });
 
+// Display Saved Route
+// Deleted any existing articles in current collections
 router.get('/displayArticles', (req, res) => {
-
-  Current.remove({}, (req, data) => {
+  Current.remove({}, (err, data) => {
     console.log('current collections was deleted');
   });
 
-  Article.find({}, 'topic title url', (req, data) => {
+  Article.find({}, 'topic title url', () => {
   })
     .sort({createdAt: 'desc'})
     .then((data) => {
       res.send({response: data});
     });
-})
+});
 
 //IMPORTANT FOR NEW USERS : is a special identifier to create unique paramas!!!!!!!!!
 // req.params is the properties tied to the router in this example it is :uid
@@ -58,36 +66,39 @@ router.delete('/delete/:uid', (req, res) => {
   })
 });
 
+// ERROR EXISITNG WITH PROMISE!!!!! MINOR NEEDS ATTENTION
+// Runs and SHOULD display cheerio articles (scrapped)
 router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
     if ( grabArticles() === undefined ) {
-      console.log('hurrayyyy');
+      // console.log('hurrayyyy');
       resolve();
     } else {
-      console.log('oh nooooooo!');
+      // console.log('oh nooooooo!');
       reject();
     }
   });
 
   promiseInfo.then(() => {
-    Current.find({}, 'topic title url', (req, data) => {
+    Current.find({}, 'topic title url', () => {
     }).limit(3)
       // gives the last three articles saved in current models
       .sort({createdAt: 'desc'})
       .then((data) => {
         res.send({response: data, total: 'Articles were found!'});
-        // console.log(data);
-    })
+      })
   });
 });
+
 
 router.post('/comments', (req, res) => {
   res.redirect('/');
 });
 
-// default route
+// Default route
 router.get('/', (req, res) => {
   res.render('firstPage');
 });
+
 
 module.exports = router;
