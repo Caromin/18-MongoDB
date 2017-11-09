@@ -29,8 +29,8 @@ SaveArticle = (id, data) => {
     success: function(response) {
       console.log(id);
       $('#' + id.toString())
-        .addClass('newBtnColor nohover btn-disabled')
-        .removeClass('saveCurrent')
+        .addClass('btn-warning disabled')
+        .removeClass('saveCurrent btn-primary')
         .text('Saved!');
       console.log('this is the end client side reponse: ' + response.response);
     }
@@ -63,11 +63,12 @@ DisplaySavedArticles = () => {
   });
 }
 
-
+// SEE router.delete in routes.js for more comments about using delete router and req.params for unique url routes
 DeleteArticle = (id, data) => {
+  const url = '/delete/' + id.toString();
   $.ajax({
-    type: 'POST',
-    url: '/delete',
+    type: 'DELETE',
+    url: url,
     contentType: 'application/json',
     dataType: 'json',
     data: JSON.stringify(data),

@@ -39,10 +39,14 @@ router.get('/displayArticles', (req, res) => {
     });
 })
 
-router.post('/delete', (req, res) => {
+//IMPORTANT FOR NEW USERS : is a special identifier to create unique paramas!!!!!!!!!
+// req.params is the properties tied to the router in this example it is :uid
+router.delete('/delete/:uid', (req, res) => {
+  console.log(req.params.uid);
+
   // console.log('this is server side: ' + req.body.id);
-  Article.remove({_id: req.body.id}, (err, success) => {
-      console.log('id found and deleted');
+  Article.remove({_id: req.params.uid}, () => {
+      // console.log(req.body.id + 'found and deleted');
   }).then((data) => {
     res.send({response: req.body.id + 'was removed'});
   })
