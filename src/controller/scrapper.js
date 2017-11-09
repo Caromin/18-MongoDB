@@ -24,7 +24,7 @@ grabArticles = () => {
         newCurrent.save();
       })
     }
-    return;
+    return true;
   });
 }
 

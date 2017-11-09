@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const {router, changeStatus} = require('./src/index');
 
 // variables
+// Imported Promise ES6
+mongoose.Promise = global.Promise;
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = process.env.MONGODB_URI || 'mongodb://caromin:Learning1@ds143211.mlab.com:43211/aromindatabase';

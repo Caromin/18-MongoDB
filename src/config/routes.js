@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 
 // Imported local files
 const {grabArticles} = require('../controller/scrapper.js');
@@ -7,8 +6,6 @@ const Article = require('../models/articles');
 const Current = require('../models/current');
 const Comments = require('../models/comments');
 
-// Imported Promise ES6
-mongoose.Promise = global.Promise;
 
 // variables
 const router = express.Router();
@@ -71,23 +68,27 @@ router.delete('/delete/:uid', (req, res) => {
 // SHOULD GENERATE THE COLLECTIONS THENNNNNN GRAB INFO, BUT GRABBING INFO BEFORE INFO IS SAVED
 router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
-    if ( grabArticles() === undefined ) {
-      // console.log('hurrayyyy');
-      resolve();
-    } else {
-      // console.log('oh nooooooo!');
-      reject();
+
+    let y = function(grabArticles) {
+      grabArticles();
+      return true;
     }
+
+    if (y(grabArticles)) {
+      Current.find({}, 'topic title url', () => {
+      }).limit(3)
+        // gives the last three articles saved in current models
+        .sort({createdAt: 'desc'})
+        .then((data) => {
+            resolve(data);
+        })
+  } else {
+      reject('was rejected');
+  }
   });
 
-  promiseInfo.then(() => {
-    Current.find({}, 'topic title url', () => {
-    }).limit(3)
-      // gives the last three articles saved in current models
-      .sort({createdAt: 'desc'})
-      .then((data) => {
+  promiseInfo.then((data) => {
         res.send({response: data, total: 'Articles were found!'});
-      })
   });
 });
 

@@ -38,7 +38,7 @@ AddComment = (id, data) => {
   $('#modalbody')
     .append(
       '<form method="POST" action="/comments" id="formId">'
-      + '<textarea form="formId" rows="4" class="inputForm" placeholder="Enter comment here..."></textarea>'
+      + '<textarea form="formId" rows="4" class="inputForm" placeholder="Enter text here..."></textarea>'
       + '<input id="sendComment" type="submit" value="Submit">'
       + '</form>'
   );

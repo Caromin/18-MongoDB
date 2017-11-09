@@ -12,7 +12,9 @@
     <nav id='navstyling' class='navbar sticky-top navbar-inverse bg-inverse'>
       <div class='row'>
         <h1 class='navbar-brand mb-0'>Mongo Scrapper Website</h1>
-          <button id='savedArts' class='btn btn-primary navbuttoncss' type='submit'> Saved Articles</button>
+          {{!-- <form method='GET' action='/displayArticles' > --}}
+            <button id='savedArts' class='btn btn-primary navbuttoncss' type='submit'> Saved Articles</button>
+          {{!-- </form> --}}
           <button id='modulebtn' class='btn btn-primary navbuttoncss' type='submit' data-toggle="modal" data-target="#confirmationModal">Scrap Articles</button>
         <button class="btn btn-primary navbuttoncss" onclick="window.open('https://github.com/Caromin')">Github</button>
         <button class="btn btn-primary navbuttoncss" onclick="window.open('https://caromin.github.io/Caromin-WebPortfolio/')">Web Portfolio</button>
@@ -49,8 +51,8 @@
   </div>
 
     <footer id='mainfooter'>
-      <small>Created by Christian A. Last Updated: 11/08/17</small></br>
-      <small>This assignment uses the follow: mongoose, mongoDB, handlebars views, request, cheerio, express, bootstrap v4, and node.</small>
+      <small>Created by Christian A. Last Updated: 11/09/17</small></br>
+      <small>This assignment uses the follow: mongoose, mongoDB, ajax, handlebars views, request, cheerio, express, bootstrap v4, and node.</small>
     </footer>
 </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
