@@ -1,3 +1,4 @@
+// Initial page load onclicks
 $(document).ready(function() {
   $('#modulebtn').on("click", function() {
     ScrapArticles();
@@ -7,18 +8,29 @@ $(document).ready(function() {
   })
 });
 
-$('body').on('click', '.saveCurrent', function (){
+// For ajax generated buttons
+$('body').on('click', '.saveCurrent, .delete, .addComment', function (){
   const id = this.id;
   const data = {id: this.id};
-  SaveArticle(id, data);
+  const className = $(this).attr('class');
+  // console.log(className);
+
+  switch(className) {
+    case 'btn btn-primary saveCurrent':
+      SaveArticle(id, data);
+      break;
+    case 'btn btn-primary delete':
+      DeleteArticle(id, data);
+      break;
+    case 'btn btn-primary addComment':
+      SaveArticle(id, data);
+      break;
+    default:
+      break;
+  }
 });
 
-$('body').on('click', '.delete', function (){
-  const id = this.id;
-  const data = {id: this.id};
-  DeleteArticle(id, data);
-});
-
+// Saves and adds classes from current collection moves to articles collections
 SaveArticle = (id, data) => {
   $.ajax({
     type: 'POST',
@@ -27,17 +39,43 @@ SaveArticle = (id, data) => {
     dataType: 'json',
     data: JSON.stringify(data),
     success: function(response) {
-      console.log(id);
+      if ( response.response === false ) {
+        $('#' + id.toString())
+          .addClass('btn-danger disabled')
+          .removeClass('saveCurrent btn-primary')
+          .text('Already Saved!');
+          alert('Already Exists. \n\n' + 'This Article has already been saved, please check your Saved Articles');
+      }
+      else {
+      // console.log(id);
       $('#' + id.toString())
         .addClass('btn-warning disabled')
         .removeClass('saveCurrent btn-primary')
         .text('Saved!');
-      console.log('this is the end client side reponse: ' + response.response);
+        console.log('the article was moved from current to articles collections: ' + response.response);
+      }
     }
   });
 }
 
 
+// Delete button in saved articles section
+// SEE router.delete in routes.js for more comments about using delete router and req.params for unique url routes
+DeleteArticle = (id, data) => {
+  const url = '/delete/' + id.toString();
+  $.ajax({
+    type: 'DELETE',
+    url: url,
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify(data),
+    success: function(response) {
+      DisplaySavedArticles();
+    }
+  });
+}
+
+// Displays articles collections onclick
 DisplaySavedArticles = () => {
   $.ajax({
     type: 'GET',
@@ -54,7 +92,7 @@ DisplaySavedArticles = () => {
             + '<b>Title:</b> ' + response.response[i].title + '</br>'
             + '<b>URL:</b> ' + '<a href=' + response.response[i].url + ' target="_blank">Link</a>'
             + '</div>'
-            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary " type="submit" >Add Comment</button></div>'
+            + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary addComment" type="submit" >Add Comment</button></div>'
             + '<div class="col-3"><button id=' + response.response[i]._id + ' class="btn btn-primary delete" type="submit" >Delete Article</button></div>'
             + '</div><hr>'
         );
@@ -63,22 +101,7 @@ DisplaySavedArticles = () => {
   });
 }
 
-// SEE router.delete in routes.js for more comments about using delete router and req.params for unique url routes
-DeleteArticle = (id, data) => {
-  const url = '/delete/' + id.toString();
-  $.ajax({
-    type: 'DELETE',
-    url: url,
-    contentType: 'application/json',
-    dataType: 'json',
-    data: JSON.stringify(data),
-    success: function(response) {
-      DisplaySavedArticles();
-    }
-  });
-}
-
-
+// Using cheerio to grab inital articles
 ScrapArticles = () => {
   $.ajax({
     url: '/api/fetch',

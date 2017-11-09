@@ -39,7 +39,7 @@ app.use('/api/fetch', router);
 app.use('/comments', router);
 app.use('/delete', router);
 
-mongoose.connect(db, { useMongoClient: false }, (err) => {
+mongoose.connect(db, { useMongoClient: true }, (err) => {
   if (err) {
     console.log('there was an error');
   }
