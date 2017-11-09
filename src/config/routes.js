@@ -38,16 +38,23 @@ router.post('/saved', (req, res) => {
 // Display Saved Route
 // Deleted any existing articles in current collections
 router.get('/displayArticles', (req, res) => {
-  Current.remove({}, (err, data) => {
-    console.log('current collections was deleted');
-  });
 
-  Article.find({}, 'topic title url', () => {
-  })
-    .sort({createdAt: 'desc'})
-    .then((data) => {
+  Current.count({}, (err, count) => {
+    if (count === 6) {
+      return;
+    } else {
+      Current.remove({}, (err, data) => {
+        console.log('current collections was deleted');
+      });
+    }
+  }).then(() => {
+    Article.find({}, 'topic title url', () => {
+    })
+      .sort({createdAt: 'desc'})
+      .then((data) => {
       res.send({response: data});
-    });
+      });
+  });
 });
 
 //IMPORTANT FOR NEW USERS : is a special identifier to create unique paramas!!!!!!!!!
@@ -94,7 +101,14 @@ router.get('/api/fetch', (req, res) => {
 
 
 router.post('/comments', (req, res) => {
-  res.redirect('/');
+  // console.log(req.body.userComment);
+  const newComment = new Comments({
+    comment: req.body.userComment,
+    articleId: req.body.id
+  });
+
+  newComment.save();
+  res.send({response: 'finished'});
 });
 
 // Default route

@@ -9,10 +9,11 @@ $(document).ready(function() {
 });
 
 // For ajax generated buttons
-$('body').on('click', '.saveCurrent, .delete, .addComment', function (){
+$('body').on('click', '.saveCurrent, .delete, .addComment, #sendComment', function (){
   const id = this.id;
   const data = {id: this.id};
   const className = $(this).attr('class');
+  const idName = $(this).attr('id');
   // console.log(className);
 
   switch(className) {
@@ -28,7 +29,25 @@ $('body').on('click', '.saveCurrent, .delete, .addComment', function (){
     default:
       break;
   }
+
+  $('#sendComment').on('click', () => {
+    const userComment = $('#commentInfo').val();
+    SaveComment(id, data, userComment);
+  });
 });
+
+SaveComment = (id, data, userComment) => {
+  $.ajax({
+    type: 'POST',
+    url: '/comments',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({id: id, userComment: userComment}),
+    success: (response) => {
+      console.log('hello world');
+    }
+  });
+};
 
 AddComment = (id, data) => {
   $('#modalbody').html('');
@@ -37,8 +56,8 @@ AddComment = (id, data) => {
     .text('Add a Comment');
   $('#modalbody')
     .append(
-      '<form method="POST" action="/comments" id="formId">'
-      + '<textarea form="formId" rows="4" class="inputForm" placeholder="Enter text here..."></textarea>'
+      '<form>'
+      + '<textarea id="commentInfo" form="formId" rows="4" class="inputForm" placeholder="Enter text here..."></textarea>'
       + '<input id="sendComment" type="submit" value="Submit">'
       + '</form>'
   );
@@ -106,7 +125,8 @@ DisplaySavedArticles = () => {
             + '<b>Title:</b> ' + response.response[i].title + '</br>'
             + '<b>URL:</b> ' + '<a href=' + response.response[i].url + ' target="_blank">Link</a>'
             + '</div>'
-            + '<div class="col-4 text-left"><b>Comments:</b></br>'
+            + '<div class="col-4 text-left"><b>Comments:</b>'
+            + '<div id=' + response.response[i]._id + ' class="container text-left commentsLeft"></div></br>'
         //more info here
             + '</div>'
             + '<div class="col-2"><button id=' + response.response[i]._id + ' class="btn btn-primary addComment" type="submit" >Add Comment</button></div>'
