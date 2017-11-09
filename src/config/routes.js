@@ -108,7 +108,11 @@ router.post('/comments', (req, res) => {
   });
 
   newComment.save();
-  res.send({response: 'finished'});
+
+  Comments.find({articleId: req.body.id})
+    .then((data) => {
+      console.log(data.comment);
+    })
 });
 
 // Default route
