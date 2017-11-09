@@ -68,6 +68,7 @@ router.delete('/delete/:uid', (req, res) => {
 
 // ERROR EXISITNG WITH PROMISE!!!!! MINOR NEEDS ATTENTION
 // Runs and SHOULD display cheerio articles (scrapped)
+// SHOULD GENERATE THE COLLECTIONS THENNNNNN GRAB INFO, BUT GRABBING INFO BEFORE INFO IS SAVED
 router.get('/api/fetch', (req, res) => {
   const promiseInfo = new Promise((resolve, reject) => {
     if ( grabArticles() === undefined ) {
