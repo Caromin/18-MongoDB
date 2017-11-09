@@ -40,9 +40,12 @@ router.get('/displayArticles', (req, res) => {
 })
 
 router.post('/delete', (req, res) => {
-  console.log('this is server side: ' + req.body.id);
-  res.send({response: 'finished'});
-  // Article.findOneAndRemove({id: })
+  // console.log('this is server side: ' + req.body.id);
+  Article.remove({_id: req.body.id}, (err, success) => {
+      console.log('id found and deleted');
+  }).then((data) => {
+    res.send({response: req.body.id + 'was removed'});
+  })
 });
 
 router.get('/api/fetch', (req, res) => {

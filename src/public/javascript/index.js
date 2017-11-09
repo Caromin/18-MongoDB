@@ -64,12 +64,13 @@ DisplaySavedArticles = () => {
 }
 
 
-DeleteArticle = () => {
+DeleteArticle = (id, data) => {
   $.ajax({
     type: 'POST',
     url: '/delete',
     contentType: 'application/json',
     dataType: 'json',
+    data: JSON.stringify(data),
     success: function(response) {
       DisplaySavedArticles();
     }
