@@ -1,5 +1,5 @@
 # 18-MongoDB
-(finish) Using Request/cheerio npm to grab data from FiveThirtyEight Website and save or delete the data and save comments to an article
+(finished 90% Completed) Using Request/cheerio npm to grab data from FiveThirtyEight Website and save or delete the data and save comments to an article
 
 2 Known issue (medium concern):
   - The initial onclick for scrap articles does not wait for promise function to complete before sending data via ajax to be displayed.
